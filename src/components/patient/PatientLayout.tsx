@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { PatientHome } from './PatientHome';
 import { PatientMyPlan } from './PatientMyPlan';
+import { PatientExerciseLibrary } from './PatientExerciseLibrary';
 import { VisualGuideView } from './VisualGuideView';
 import { PatientProgress } from './PatientProgress';
 import { PatientHelp } from './PatientHelp';
@@ -14,7 +15,7 @@ import { VoiceTaskLoggerModal } from './VoiceTaskLoggerModal';
 import { VoiceCommandQuickBar } from './VoiceCommandQuickBar';
 import { DailyStreakBadge } from './DailyStreakBadge';
 import { StreakRewardModal } from './StreakRewardModal';
-import { Home, Calendar, Eye, TrendingUp, HelpCircle, Bell, BellRing, Mic, Flame } from 'lucide-react';
+import { Home, Calendar, Video, Eye, TrendingUp, HelpCircle, Bell, BellRing, Mic, Flame } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
 import { PlanExercise, TaskNotification, NotificationSettings, DailyStreakData } from '../../types';
 import {
@@ -33,7 +34,7 @@ import {
 import confetti from 'canvas-confetti';
 
 export const PatientLayout: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<'home' | 'plan' | 'visual_guide' | 'progress' | 'help'>('home');
+  const [activeTab, setActiveTab] = useState<'home' | 'plan' | 'library' | 'visual_guide' | 'progress' | 'help'>('home');
   const [playerExercise, setPlayerExercise] = useState<PlanExercise | null>(null);
   const [visualGuideExerciseName, setVisualGuideExerciseName] = useState<string | null>(null);
   const [isNotificationCenterOpen, setIsNotificationCenterOpen] = useState<boolean>(false);
@@ -166,6 +167,13 @@ export const PatientLayout: React.FC = () => {
       labelTa: 'என் திட்டம்',
       labelHi: 'योजना',
       icon: Calendar,
+    },
+    {
+      id: 'library' as const,
+      labelEn: 'EXERCISE LIBRARY',
+      labelTa: 'உடற்பயிற்சி கூடம்',
+      labelHi: 'व्यायाम लाइब्रेरी',
+      icon: Video,
     },
     {
       id: 'visual_guide' as const,
@@ -334,10 +342,44 @@ export const PatientLayout: React.FC = () => {
           <PatientHome
             onNavigateToPlan={() => setActiveTab('plan')}
             onNavigateToVisualGuide={() => setActiveTab('visual_guide')}
+            onNavigateToLibrary={() => setActiveTab('library')}
           />
         )}
         {activeTab === 'plan' && (
           <PatientMyPlan onNavigateToVisualGuide={() => setActiveTab('visual_guide')} />
+        )}
+        {activeTab === 'library' && (
+          <PatientExerciseLibrary
+            onStartExercise={(exerciseName) => {
+              const match =
+                activePlan.exercises.find((e) => e.exerciseName === exerciseName) || {
+                  id: `lib-${Date.now()}`,
+                  exerciseId: `ex-${Date.now()}`,
+                  exerciseName,
+                  frequency: 'Twice daily',
+                  sets: 3,
+                  reps: 10,
+                  holdTimeSec: 3,
+                  restTimeSec: 15,
+                  patientInstructionEn: 'Execute smoothly with 3-second hold in pain-free range.',
+                  patientInstructionTa: 'வலியில்லாத வரம்பில் 3 வினாடிகள் நிதானமாக பிடித்து செய்யவும்.',
+                  patientInstructionHi: 'दर्द-मुक्त सीमा में 3 सेकंड रोकते हुए शांत गति से करें।',
+                  audioScriptEn: `Begin ${exerciseName}. Perform 3 sets of 10 repetitions with a 3-second hold.`,
+                  audioScriptTa: `${exerciseName} உடற்பயிற்சியை தொடங்கவும். 3 வினாடிகள் பிடித்து செய்யவும்.`,
+                  audioScriptHi: `${exerciseName} व्यायाम शुरू करें। 3 सेकंड रोकते हुए करें।`,
+                  completedToday: false,
+                  completedCount: 0,
+                  scheduledTime: 'Anytime',
+                  slotName: 'Exercise Library Session',
+                  professionalInstruction: 'Targeted biomechanical exercise from clinical protocol library.',
+                  timeSlot: 'Flexible',
+                  repetitions: '3 sets × 10 reps',
+                  timeCategory: 'morning' as const,
+                };
+              setPlayerExercise(match);
+            }}
+            onNavigateToPlan={() => setActiveTab('plan')}
+          />
         )}
         {activeTab === 'visual_guide' && (
           <VisualGuideView onStartExercise={() => setActiveTab('home')} />
@@ -449,8 +491,8 @@ export const PatientLayout: React.FC = () => {
       </div>
 
       {/* Mobile Bottom Navigation (Persistent, Touch friendly) */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-[#E8E4D8] shadow-lg px-2 py-1.5">
-        <div className="grid grid-cols-5 gap-0.5">
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-[#E8E4D8] shadow-lg px-1 py-1.5">
+        <div className="grid grid-cols-6 gap-0.5">
           {navItems.map((item) => {
             const Icon = item.icon;
             const isActive = activeTab === item.id;
@@ -464,8 +506,8 @@ export const PatientLayout: React.FC = () => {
                     : 'text-[#77736A] hover:text-[#252525]'
                 }`}
               >
-                <Icon className={`w-4 h-4 ${isActive ? 'stroke-[2.5]' : ''}`} />
-                <span className="text-[9px] tracking-tight mt-1 font-semibold truncate max-w-full">
+                <Icon className={`w-3.5 h-3.5 ${isActive ? 'stroke-[2.5]' : ''}`} />
+                <span className="text-[8px] tracking-tight mt-0.5 font-semibold truncate max-w-full">
                   {getNavLabel(item)}
                 </span>
               </button>

@@ -1,3 +1,14 @@
+export interface VideoChapter {
+  timeSec: number;
+  timeLabel: string;
+  titleEn: string;
+  titleTa: string;
+  titleHi: string;
+  instructionEn: string;
+  instructionTa: string;
+  instructionHi: string;
+}
+
 export interface ClinicalExerciseData {
   id: string;
   name: string;
@@ -22,6 +33,14 @@ export interface ClinicalExerciseData {
   audioEn: string;
   audioTa: string;
   audioHi: string;
+  // Video and instructional demonstration fields
+  videoDuration?: string;
+  videoDurationSec?: number;
+  videoTitle?: string;
+  videoInstructor?: string;
+  videoChapters?: VideoChapter[];
+  keyBenefits?: string[];
+  difficulty?: 'Beginner' | 'Intermediate' | 'Low-Impact';
 }
 
 export interface ClinicalPatientCase {
@@ -771,6 +790,331 @@ export const REAL_CLINICAL_EXERCISE_DATASET: ClinicalExerciseData[] = [
     audioEn: 'Stand against the wall with elbows bent at 90 degrees. Slowly slide arms up like an angel, hold 2 seconds, and slide down.',
     audioTa: 'சுவரில் ஒட்டி நின்று கைகளை மெதுவாக மேலே ஏற்றி இறக்கவும். 8 முறை செய்யவும்.',
     audioHi: 'दीवार से लगकर खड़े हों और हाथों को धीरे-धीरे ऊपर और नीचे सरकाएं।',
+    videoDuration: '0:48',
+    videoDurationSec: 48,
+    videoTitle: 'Clinical Video: Wall Angels Scapular Plane Slide',
+    videoInstructor: 'Dr. Priya Raman, Senior PT',
+    difficulty: 'Beginner',
+    keyBenefits: ['Thoracic mobilization', 'Improves forward slouching', 'Decompresses upper traps'],
+    videoChapters: [
+      { timeSec: 0, timeLabel: '0:00', titleEn: 'Wall Setup', titleTa: 'சுவர் நிலை', titleHi: 'दीवार स्थिति', instructionEn: 'Stand with upper back and sacrum flat against smooth wall', instructionTa: 'முதுகை சுவரில் பதிய வைக்கவும்', instructionHi: 'पीठ को दीवार से सटाएं' },
+      { timeSec: 12, timeLabel: '0:12', titleEn: 'Goalpost Arms', titleTa: 'கை கோணம்', titleHi: 'हाथ की स्थिति', instructionEn: 'Bend elbows 90 degrees with hands on wall', instructionTa: 'கைகளை 90 டிகிரியில் வைக்கவும்', instructionHi: 'कोहनियों को 90 डिग्री पर रखें' },
+      { timeSec: 25, timeLabel: '0:25', titleEn: 'Upward Glide', titleTa: 'மேல்நோக்கி சறுக்கல்', titleHi: 'ऊपर सरकाना', instructionEn: 'Slide hands smoothly upward along the wall', instructionTa: 'மெதுவாக மேலே சறுக்கவும்', instructionHi: 'हाथों को धीरे से ऊपर ले जाएं' },
+      { timeSec: 38, timeLabel: '0:38', titleEn: 'Hold & Lower', titleTa: 'நிறுத்தி இறக்குதல்', titleHi: 'रोकें और नीचे लाएं', instructionEn: 'Hold 2 seconds, then return slowly', instructionTa: '2 வினாடிகள் நிறுத்தி இறக்கவும்', instructionHi: '2 सेकंड रोकें और नीचे लाएं' },
+    ],
+  },
+
+  // ==========================================
+  // ADDITIONAL COMMON EXERCISES (SHOULDER, BACK, ANKLE, KNEE, HIP)
+  // ==========================================
+  {
+    id: 'ex-shoulder-scapular-retraction',
+    name: 'Standing Scapular Retraction & Pinch',
+    bodyPart: 'shoulder',
+    bodyPartLabel: 'Shoulder & Rotator Cuff',
+    icd10Code: 'M75.8 / M75.4',
+    clinicalDiagnosis: 'Scapular Dyskinesis & Postural Shoulder Rounding',
+    evidenceSource: 'APTA Shoulder Clinical Practice Guidelines: Scapular Strengthening',
+    targetMuscles: 'Rhomboids Major & Minor, Middle Trapezius, Infraspinatus',
+    safeRangeOfMotion: 'Pure horizontal retraction (0° to 10° scapular adduction)',
+    maxSafeAngleDeg: 10,
+    minSafeAngleDeg: 0,
+    cadence: '2s pinch back • 3s hold • 2s relax',
+    dosage: '3 sets × 10 reps (Twice daily)',
+    equipment: 'Zero equipment (Standing or Seated)',
+    visualCueType: 'shoulder',
+    videoDuration: '0:42',
+    videoDurationSec: 42,
+    videoTitle: 'Clinical Video: Standing Scapular Pinch Technique',
+    videoInstructor: 'Dr. Priya Raman, Senior PT',
+    difficulty: 'Beginner',
+    keyBenefits: ['Opens chest posture', 'Reduces anterior shoulder impingement', 'Strengthens mid-back'],
+    dos: [
+      'Keep shoulders pulled down away from ears throughout the squeeze.',
+      'Imagine squeezing a pencil gently between your shoulder blades.',
+      'Maintain steady calm breathing; do not hold breath.',
+    ],
+    donts: [
+      'Do not shrug shoulders up toward your neck.',
+      'Do not arch your lower back to force shoulder blades together.',
+    ],
+    stepsEn: [
+      'Step 1: Stand tall with arms relaxed naturally at your sides.',
+      'Step 2: Gently roll your shoulders down and backward.',
+      'Step 3: Squeeze your shoulder blades together toward your spine.',
+      'Step 4: Hold the firm squeeze for 3 seconds.',
+      'Step 5: Slowly release back to neutral. Repeat 10 times.',
+    ],
+    stepsTa: [
+      'படி 1: கைகளை உடலின் இருபுறமும் தளர்வாக வைத்து நேராக நிற்கவும்.',
+      'படி 2: தோள்பட்டைகளை மெதுவாக பின்னோக்கி இழுக்கவும்.',
+      'படி 3: தோள்பட்டை எலும்புகளை ஒன்றாக சேர்த்து 3 வினாடிகள் அழுத்தவும்.',
+      'படி 4: அவசரமின்றி இயல்பு நிலைக்கு கொண்டு வாருங்கள்.',
+      'படி 5: 10 முறை தொடரவும்.',
+    ],
+    stepsHi: [
+      'चरण 1: सीधे खड़े हों और हाथों को बगल में ढीला छोड़ें।',
+      'चरण 2: कंधों को धीरे से नीचे और पीछे की ओर खींचें।',
+      'चरण 3: दोनों कंधों की हड्डियों को आपस में मिलाकर 3 सेकंड दबाएं।',
+      'चरण 4: धीरे से सामान्य स्थिति में लौटें। 10 बार दोहराएं।',
+    ],
+    audioEn: 'Stand upright. Squeeze your shoulder blades back as if holding a pencil. Hold for 3 seconds and release slowly.',
+    audioTa: 'தோள்பட்டைகளை பின்னோக்கி இழுத்து 3 வினாடிகள் பிடித்து தளர்த்தவும்.',
+    audioHi: 'कंधों को पीछे की ओर खींचें और 3 सेकंड रोकें। फिर धीरे से छोड़ें।',
+    videoChapters: [
+      { timeSec: 0, timeLabel: '0:00', titleEn: 'Starting Alignment', titleTa: 'தொடக்க நிலை', titleHi: 'शुरुआती स्थिति', instructionEn: 'Stand tall with chin neutral and arms relaxed', instructionTa: 'நேராக நிற்கவும்', instructionHi: 'सीधे खड़े हों' },
+      { timeSec: 10, timeLabel: '0:10', titleEn: 'Shoulder Drop', titleTa: 'தோள் இறக்கம்', titleHi: 'कंधा नीचे करना', instructionEn: 'Drop shoulders away from ears before squeezing', instructionTa: 'தோள்களை கீழே இறக்கவும்', instructionHi: 'कंधों को नीचे रखें' },
+      { timeSec: 22, timeLabel: '0:22', titleEn: 'Scapular Pinch', titleTa: 'தோள்பட்டை அழுத்தம்', titleHi: 'कंधे दबाना', instructionEn: 'Squeeze shoulder blades firmly toward spine', instructionTa: 'தோள்பட்டைகளை ஒன்றாக அழுத்தவும்', instructionHi: 'कंधों को पीछे दबाएं' },
+      { timeSec: 32, timeLabel: '0:32', titleEn: 'Controlled Release', titleTa: 'மெதுவான தளர்வு', titleHi: 'आराम देना', instructionEn: 'Release slowly under control', instructionTa: 'மெதுவாக தளர்த்தவும்', instructionHi: 'धीरे से छोड़ें' },
+    ],
+  },
+  {
+    id: 'ex-back-bird-dog',
+    name: 'Quadruped Bird-Dog Core Extension',
+    bodyPart: 'back',
+    bodyPartLabel: 'Thoracic & Lumbar Spine',
+    icd10Code: 'M54.5 / M47.8',
+    clinicalDiagnosis: 'Lumbar Spondylolisthesis, Core Instability & Chronic Back Aches',
+    evidenceSource: 'McGill Low Back Stability Protocols & Spine Biomechanics Research',
+    targetMuscles: 'Multifidus, Erector Spinae, Gluteus Maximus, Core Transversus',
+    safeRangeOfMotion: 'Level limb elevation (0° parallel to floor without lumbar hyperextension)',
+    maxSafeAngleDeg: 0,
+    minSafeAngleDeg: 0,
+    cadence: '2s lift • 3s static hold • 2s lower',
+    dosage: '2 sets × 8 reps per alternating side',
+    equipment: 'Padded mat or firm carpet',
+    visualCueType: 'back',
+    videoDuration: '0:55',
+    videoDurationSec: 55,
+    videoTitle: 'Clinical Video: Bird-Dog Spine Stabilization Technique',
+    videoInstructor: 'Dr. Priya Raman, Senior PT',
+    difficulty: 'Intermediate',
+    keyBenefits: ['Lumbar spine stabilization', 'Zero spine compression loading', 'Cross-body coordination'],
+    dos: [
+      'Begin on hands and knees with hands below shoulders and knees below hips.',
+      'Reach one arm forward while kicking opposite leg backward until level with floor.',
+      'Keep hips and shoulders level with floor; do not tilt or twist pelvis.',
+    ],
+    donts: [
+      'Do not lift leg above hip level, which causes lower back to sag.',
+      'Do not let head hang down or neck arch up.',
+    ],
+    stepsEn: [
+      'Step 1: Start on all fours with back flat and core gently engaged.',
+      'Step 2: Slowly lift right arm forward and left leg straight back.',
+      'Step 3: Hold arm and leg horizontal in a straight line for 3 seconds.',
+      'Step 4: Lower smoothly back to all fours.',
+      'Step 5: Alternate with left arm and right leg. Complete 8 reps each.',
+    ],
+    stepsTa: [
+      'படி 1: முழங்கால்கள் மற்றும் கைகளை தரையில் ஊன்றி நிற்கவும்.',
+      'படி 2: வலது கையை முன்னோக்கியும், இடது காலை பின்னோக்கியும் நேராக நீட்டவும்.',
+      'படி 3: இடுப்பை வளைக்காமல் 3 வினாடிகள் நேர்கோட்டில் பிடிக்கவும்.',
+      'படி 4: மெதுவாக இறக்கி, மறுகை மற்றும் காலை மாற்றி செய்யவும்.',
+      'படி 5: 8 முறை தொடரவும்.',
+    ],
+    stepsHi: [
+      'चरण 1: दोनों हाथों और घुटनों के बल आएं।',
+      'चरण 2: दाहिना हाथ आगे और बायां पैर पीछे सीधा उठाएं।',
+      'चरण 3: कमर को सीधा रखते हुए 3 सेकंड तक रोकें।',
+      'चरण 4: धीरे से नीचे लाएं और दूसरी तरफ भी दोहराएं।',
+      'चरण 5: 8 बार दोहराएं।',
+    ],
+    audioEn: 'On hands and knees, extend opposite arm and leg straight out. Keep spine flat. Hold 3 seconds, then switch sides.',
+    audioTa: 'எதிர் கையும் காலும் நேராக நீட்டி 3 வினாடிகள் பிடித்து மாற்றி செய்யவும்.',
+    audioHi: 'विपरीत हाथ और पैर को सीधा फैलाएं। 3 सेकंड रोकें और फिर बदलें।',
+    videoChapters: [
+      { timeSec: 0, timeLabel: '0:00', titleEn: 'Quadruped Base', titleTa: 'அடிப்படை நிலை', titleHi: 'चौपाया स्थिति', instructionEn: 'Hands under shoulders, knees under hips on padded mat', instructionTa: 'முழங்கால் மற்றும் கைகள் சமமாக', instructionHi: 'हाथ और घुटने सही स्थिति में' },
+      { timeSec: 15, timeLabel: '0:15', titleEn: 'Cross Extension', titleTa: 'எதிர் நீட்சி', titleHi: 'विपरीत विस्तार', instructionEn: 'Reach opposite arm and leg straight to hip level', instructionTa: 'எதிர் கை மற்றும் கால் நீட்டவும்', instructionHi: 'विपरीत हाथ और पैर सीधा उठाएं' },
+      { timeSec: 32, timeLabel: '0:32', titleEn: 'Core Stability Hold', titleTa: 'நிலை நிறுத்தம்', titleHi: 'संतुलन रोकें', instructionEn: 'Lock core without letting pelvis wobble', instructionTa: 'இடுப்பை அசைக்காமல் பிடிக்கவும்', instructionHi: 'कूल्हों को हिलाए बिना रोकें' },
+      { timeSec: 45, timeLabel: '0:45', titleEn: 'Smooth Reset', titleTa: 'மறுநிலை', titleHi: 'वापसी', instructionEn: 'Return smoothly and transition to other diagonal', instructionTa: 'மெதுவாக இறக்கி மாற்றவும்', instructionHi: 'धीरे से नीचे लाकर बदलें' },
+    ],
+  },
+  {
+    id: 'ex-ankle-heel-raises',
+    name: 'Standing Double-Heel Calf Raises',
+    bodyPart: 'ankle',
+    bodyPartLabel: 'Ankle & Foot',
+    icd10Code: 'S93.4 / M76.6',
+    clinicalDiagnosis: 'Post-Sprain Ankle Instability & Achilles Tendon Deconditioning',
+    evidenceSource: 'Cochrane Musculoskeletal Review: Progressive Loading for Ankle Rehabilitation',
+    targetMuscles: 'Gastrocnemius (Medial & Lateral heads), Soleus & Plantar Intrinsic Muscles',
+    safeRangeOfMotion: 'Full active plantarflexion (0° to 35° elevation on balls of feet)',
+    maxSafeAngleDeg: 35,
+    minSafeAngleDeg: 0,
+    cadence: '2s rise up • 2s peak hold • 3s slow lowering',
+    dosage: '3 sets × 12 reps (Twice daily)',
+    equipment: 'Wall or sturdy chair back for balance fingertip support',
+    visualCueType: 'ankle',
+    videoDuration: '0:44',
+    videoDurationSec: 44,
+    videoTitle: 'Clinical Video: Standing Heel Raise Biomechanics',
+    videoInstructor: 'Dr. Priya Raman, Senior PT',
+    difficulty: 'Beginner',
+    keyBenefits: ['Strengthens Achilles tendon', 'Pumps lower leg circulation', 'Prevents recurring ankle twists'],
+    dos: [
+      'Rest fingertips lightly on a wall or chair back only for balance.',
+      'Rise up smoothly onto the balls of both feet, keeping ankles straight.',
+      'Lower down extra slowly over 3 seconds to train eccentric calf strength.',
+    ],
+    donts: [
+      'Do not let ankles roll outward onto the pinky toes.',
+      'Avoid bouncing quickly at the bottom.',
+    ],
+    stepsEn: [
+      'Step 1: Stand tall with feet hip-width apart and fingertips on wall.',
+      'Step 2: Press through balls of big toes and lift both heels high.',
+      'Step 3: Hold at the very top for 2 counts feeling strong calf tension.',
+      'Step 4: Lower heels slowly and gently back to floor over 3 seconds.',
+      'Step 5: Repeat for 12 calm repetitions.',
+    ],
+    stepsTa: [
+      'படி 1: சுவரை தொட்டுக்கொண்டு கால்களை நேராக வைத்து நிற்கவும்.',
+      'படி 2: பாத விரல்களின் மீது எழும்பி குதிகால்களை மேலே உயர்த்தவும்.',
+      'படி 3: உச்சியில் 2 வினாடிகள் கெண்டைக்கால் இறுக்கத்தை உணரவும்.',
+      'படி 4: 3 வினாடிகளில் மெதுவாக குதிகால்களை தரைக்கு இறக்கவும்.',
+      'படி 5: 12 முறை செய்யவும்.',
+    ],
+    stepsHi: [
+      'चरण 1: दीवार का हल्का सहारा लेकर सीधे खड़े हों।',
+      'चरण 2: पंजों के बल दोनों एड़ियों को ऊपर उठाएं।',
+      'चरण 3: ऊपर 2 सेकंड रोकें और पिंडलियों में खिंचाव महसूस करें।',
+      'चरण 4: 3 सेकंड में धीरे-धीरे एड़ियों को नीचे लाएं।',
+      'चरण 5: 12 बार दोहराएं।',
+    ],
+    audioEn: 'Rise up onto your toes, lifting heels high. Hold for 2 seconds, then lower down very slowly.',
+    audioTa: 'குதிங்கால்களை மேலே உயர்த்தி 2 வினாடிகள் வைக்கவும். பின் மெதுவாக இறக்கவும்.',
+    audioHi: 'एड़ियों को ऊपर उठाएं। 2 सेकंड रोकें और फिर धीरे-धीरे नीचे लाएं।',
+    videoChapters: [
+      { timeSec: 0, timeLabel: '0:00', titleEn: 'Fingertip Balance', titleTa: 'விரல் சமநிலை', titleHi: 'उंगली का सहारा', instructionEn: 'Place fingertips lightly on wall with feet parallel', instructionTa: 'சுவரில் லேசாக கை வைக்கவும்', instructionHi: 'दीवार पर हल्का हाथ रखें' },
+      { timeSec: 10, timeLabel: '0:10', titleEn: 'Smooth Ascent', titleTa: 'மேலே எழுதல்', titleHi: 'ऊपर उठना', instructionEn: 'Push evenly through big toe balls to rise', instructionTa: 'பெருவிரல் வழியே மேலே எழவும்', instructionHi: 'पंजों के बल ऊपर उठें' },
+      { timeSec: 22, timeLabel: '0:22', titleEn: 'Peak Calf Squeeze', titleTa: 'தசை இறுக்கம்', titleHi: 'पिंडली खिंचाव', instructionEn: 'Hold peak contraction for 2 counts', instructionTa: '2 வினாடிகள் உச்சியில் பிடிக்கவும்', instructionHi: '2 सेकंड ऊपर रोकें' },
+      { timeSec: 33, timeLabel: '0:33', titleEn: 'Eccentric Lowering', titleTa: 'மெதுவான இறக்கம்', titleHi: 'धीमी वापसी', instructionEn: 'Descend slowly over 3 seconds', instructionTa: '3 வினாடிகளில் மெதுவாக இறக்கவும்', instructionHi: '3 सेकंड में धीरे नीचे लाएं' },
+    ],
+  },
+  {
+    id: 'ex-knee-straight-leg-raise',
+    name: 'Supine Straight Leg Raise (SLR)',
+    bodyPart: 'knee',
+    bodyPartLabel: 'Knee & Quadriceps',
+    icd10Code: 'S83.5 / M22.2',
+    clinicalDiagnosis: 'ACL Reconstruction (Phase I/II) & Patellofemoral Pain Syndrome',
+    evidenceSource: 'American Journal of Sports Medicine: Non-Weightbearing Quadriceps Activation',
+    targetMuscles: 'Rectus Femoris, Vastus Medialis, Tensor Fasciae Latae',
+    safeRangeOfMotion: '0° to 45° Leg lift (Never lift beyond 45° to protect lower back)',
+    maxSafeAngleDeg: 45,
+    minSafeAngleDeg: 0,
+    cadence: '2s lift • 3s hold at 45° • 2s lower',
+    dosage: '3 sets × 10 reps per leg',
+    equipment: 'Firm mat or bed',
+    visualCueType: 'knee',
+    videoDuration: '0:50',
+    videoDurationSec: 50,
+    videoTitle: 'Clinical Video: Straight Leg Raise (SLR) Protocol',
+    videoInstructor: 'Dr. Priya Raman, Senior PT',
+    difficulty: 'Low-Impact',
+    keyBenefits: ['Strengthens knee without joint grinding', 'Protects patella cartilage', 'Post-surgery recovery standard'],
+    dos: [
+      'Lie flat with one knee bent and the exercising leg extended straight.',
+      'Lock your knee completely straight and pull toes up toward your nose.',
+      'Lift leg smoothly to the height of the opposite bent knee (about 45 degrees).',
+    ],
+    donts: [
+      'Do not bend the knee as you lift.',
+      'Do not lift higher than 45 degrees.',
+      'Do not hold your breath.',
+    ],
+    stepsEn: [
+      'Step 1: Lie on your back on a mat. Bend one knee with foot flat.',
+      'Step 2: Straighten your other leg fully and flex foot toward your face.',
+      'Step 3: Tighten your thigh and lift leg smoothly about 12 to 18 inches.',
+      'Step 4: Hold straight leg steady for 3 seconds.',
+      'Step 5: Lower foot slowly to floor. Complete 10 reps.',
+    ],
+    stepsTa: [
+      'படி 1: மல்லாந்து படுத்து ஒரு காலை மடக்கவும், மறுகாலை நீட்டவும்.',
+      'படி 2: நீட்டிய காலின் முழங்காலை வளைக்காமல் நேராக வைக்கவும்.',
+      'படி 3: தொடையை இறுக்கி காலை மெதுவாக 45 டிகிரி மேலே உயர்த்தவும்.',
+      'படி 4: 3 வினாடிகள் அப்படியே பிடித்து மெதுவாக இறக்கவும்.',
+      'படி 5: 10 முறை செய்யவும்.',
+    ],
+    stepsHi: [
+      'चरण 1: पीठ के बल लेटें। एक घुटना मोड़ें और दूसरा सीधा रखें।',
+      'चरण 2: सीधे पैर के पंजे को अपनी ओर खींचें और घुटना सीधा रखें।',
+      'चरण 3: जांघ को कसते हुए पैर को 45 डिग्री ऊपर उठाएं।',
+      'चरण 4: 3 सेकंड रोकें और फिर धीरे से नीचे लाएं।',
+      'चरण 5: 10 बार दोहराएं।',
+    ],
+    audioEn: 'Lie down, lock your knee straight, and lift your leg to 45 degrees. Hold for 3 seconds, then lower down smoothly.',
+    audioTa: 'முழங்காலை வளைக்காமல் நேராக உயர்த்தி 3 வினாடிகள் பிடித்து இறக்கவும்.',
+    audioHi: 'घुटना सीधा रखते हुए पैर 45 डिग्री उठाएं। 3 सेकंड रोकें और धीरे से नीचे लाएं।',
+    videoChapters: [
+      { timeSec: 0, timeLabel: '0:00', titleEn: 'Supine Position', titleTa: 'படுக்கை நிலை', titleHi: 'लेटने की स्थिति', instructionEn: 'Bend unaffected knee to support lumbar spine', instructionTa: 'ஒரு காலை மடக்கவும்', instructionHi: 'एक घुटना मोड़कर रखें' },
+      { timeSec: 12, timeLabel: '0:12', titleEn: 'Quadriceps Lock', titleTa: 'தொடை இறுக்கம்', titleHi: 'जांघ कसना', instructionEn: 'Squeeze front thigh and pull toes toward nose', instructionTa: 'தொடையை இறுக்கவும்', instructionHi: 'जांघ को कस लें' },
+      { timeSec: 25, timeLabel: '0:25', titleEn: '45-Degree Elevation', titleTa: '45 டிகிரி ஏற்றம்', titleHi: '45 डिग्री उठाव', instructionEn: 'Lift leg level with opposite bent knee', instructionTa: 'மடக்கிய முழங்கால் அளவிற்கு உயர்த்தவும்', instructionHi: 'विपरीत घुटने के बराबर उठाएं' },
+      { timeSec: 38, timeLabel: '0:38', titleEn: 'Controlled Descent', titleTa: 'கட்டுப்படுத்திய இறக்கம்', titleHi: 'नियंत्रित वापसी', instructionEn: 'Lower down with thigh remaining engaged', instructionTa: 'மெதுவாக இறக்கவும்', instructionHi: 'धीरे-धीरे नीचे लाएं' },
+    ],
+  },
+  {
+    id: 'ex-hip-standing-abduction',
+    name: 'Standing Supported Hip Abduction',
+    bodyPart: 'hip',
+    bodyPartLabel: 'Hip & Pelvic Girdle',
+    icd10Code: 'M16.1 / M25.55',
+    clinicalDiagnosis: 'Greater Trochanteric Pain Syndrome & Hip Gluteal Atrophy',
+    evidenceSource: 'British Journal of Sports Medicine: Hip Abductor Strengthening in Osteoarthritis',
+    targetMuscles: 'Gluteus Medius, Gluteus Minimus, Tensor Fasciae Latae',
+    safeRangeOfMotion: '0° to 30° Lateral abduction (Without leaning trunk sideways)',
+    maxSafeAngleDeg: 30,
+    minSafeAngleDeg: 0,
+    cadence: '2s lift outward • 2s hold • 3s slow return',
+    dosage: '3 sets × 10 reps each leg',
+    equipment: 'Kitchen counter, table, or chair back for light balance',
+    visualCueType: 'hip',
+    videoDuration: '0:46',
+    videoDurationSec: 46,
+    videoTitle: 'Clinical Video: Standing Hip Abduction Form',
+    videoInstructor: 'Dr. Priya Raman, Senior PT',
+    difficulty: 'Beginner',
+    keyBenefits: ['Pelvic stability while walking', 'Eliminates hip drop & limping', 'Protects knee alignment'],
+    dos: [
+      'Stand upright holding a table or counter with both hands.',
+      'Keep your torso completely vertical; do not lean to the opposite side.',
+      'Point your toes straight forward as your leg moves outward.',
+    ],
+    donts: [
+      'Do not lean your upper body to the side to cheat the height.',
+      'Do not turn your foot or toes outward toward the ceiling.',
+    ],
+    stepsEn: [
+      'Step 1: Stand tall holding onto a sturdy counter or table.',
+      'Step 2: Keeping your body upright, slowly move your right leg out to the side.',
+      'Step 3: Lift leg about 20 to 30 degrees until you feel hip muscle tighten.',
+      'Step 4: Hold for 2 seconds without leaning your torso.',
+      'Step 5: Lower leg slowly back to center. Complete 10 reps, then switch legs.',
+    ],
+    stepsTa: [
+      'படி 1: மேசையை பிடித்துக்கொண்டு நேராக நிற்கவும்.',
+      'படி 2: உடலை சாய்க்காமல், வலது காலை பக்கவாட்டில் மெதுவாக நகர்த்தவும்.',
+      'படி 3: இடுப்பு தசை இறுங்கும் வரை 30 டிகிரி வெளியே நகர்த்தவும்.',
+      'படி 4: 2 வினாடிகள் பிடித்து மீண்டும் இயல்பு நிலைக்கு கொண்டு வரவும்.',
+      'படி 5: 10 முறை செய்து பின் இடது காலுக்கு மாற்றவும்.',
+    ],
+    stepsHi: [
+      'चरण 1: मेज या कुर्सी का सहारा लेकर सीधे खड़े हों।',
+      'चरण 2: शरीर को झुकाए बिना पैर को धीरे से बगल में बाहर निकालें।',
+      'चरण 3: 30 डिग्री बाहर ले जाएं और 2 सेकंड रोकें।',
+      'चरण 4: धीरे से पैर को वापस लाएं। 10 बार दोहराएं।',
+    ],
+    audioEn: 'Stand upright with support. Move your leg out to the side without leaning your body. Hold for 2 seconds and return.',
+    audioTa: 'உடலை சாய்க்காமல் காலை பக்கவாட்டில் நகர்த்தி 2 வினாடிகள் பிடித்து சேர்க்கவும்.',
+    audioHi: 'शरीर को सीधा रखते हुए पैर को बगल में बाहर निकालें। 2 सेकंड रोकें और वापस लाएं।',
+    videoChapters: [
+      { timeSec: 0, timeLabel: '0:00', titleEn: 'Postural Stance', titleTa: 'நிமிர்ந்த நிலை', titleHi: 'सीधी स्थिति', instructionEn: 'Hold counter with spine vertical and core braced', instructionTa: 'முதுகை நேராக வைத்து நிற்கவும்', instructionHi: 'कमर सीधी रखकर खड़े हों' },
+      { timeSec: 12, timeLabel: '0:12', titleEn: 'Lateral Sweep', titleTa: 'பக்கவாட்டு நகர்வு', titleHi: 'बगल में ले जाना', instructionEn: 'Sweep leg directly out to side keeping toes forward', instructionTa: 'காலை பக்கவாட்டில் நகர்த்தவும்', instructionHi: 'पैर को सीधे बगल में ले जाएं' },
+      { timeSec: 25, timeLabel: '0:25', titleEn: 'Glute Peak Hold', titleTa: 'தசை நிறுத்தம்', titleHi: 'मांसपेशी रोकें', instructionEn: 'Hold peak contraction for 2 counts at 30 degrees', instructionTa: '2 வினாடிகள் நிலை நிறுத்தவும்', instructionHi: '2 सेकंड तक रोकें' },
+      { timeSec: 36, timeLabel: '0:36', titleEn: 'Smooth Return', titleTa: 'இயல்பு நிலை', titleHi: 'नियंत्रित वापसी', instructionEn: 'Bring foot back gently without tapping heavily', instructionTa: 'மெதுவாக கால்களை சேர்க்கவும்', instructionHi: 'धीरे से पैर वापस लाएं' },
+    ],
   },
 ];
 
@@ -882,3 +1226,85 @@ export const REAL_CLINICAL_PATIENT_CASES: ClinicalPatientCase[] = [
     clinicalSummary: '67-year-old retired clerk, morning groin stiffness, responsive to low-impact closed-chain exercise.',
   },
 ];
+
+/**
+ * Returns comprehensive video metadata and chapter timestamps for any exercise
+ */
+export function getExerciseVideoData(ex: ClinicalExerciseData): {
+  videoDuration: string;
+  videoDurationSec: number;
+  videoTitle: string;
+  videoInstructor: string;
+  difficulty: 'Beginner' | 'Intermediate' | 'Low-Impact';
+  keyBenefits: string[];
+  videoChapters: VideoChapter[];
+} {
+  const defaultDurationSec = ex.videoDurationSec || 45;
+  const defaultDuration = ex.videoDuration || '0:45';
+  const defaultTitle = ex.videoTitle || `Clinical Video Guide: ${ex.name}`;
+  const defaultInstructor = ex.videoInstructor || 'Dr. Priya Raman, Senior PT';
+  const defaultDifficulty = ex.difficulty || (ex.bodyPart === 'neck' || ex.bodyPart === 'ankle' ? 'Beginner' : 'Low-Impact');
+
+  const defaultBenefits = ex.keyBenefits && ex.keyBenefits.length > 0
+    ? ex.keyBenefits
+    : [
+        `Targeted activation of ${ex.targetMuscles.split(',')[0]}`,
+        `Safe range of motion: ${ex.safeRangeOfMotion}`,
+        `Pain-free functional rehabilitation`,
+      ];
+
+  const defaultChapters: VideoChapter[] = ex.videoChapters && ex.videoChapters.length > 0
+    ? ex.videoChapters
+    : [
+        {
+          timeSec: 0,
+          timeLabel: '0:00',
+          titleEn: '1. Setup & Starting Stance',
+          titleTa: '1. தொடக்க நிலை & தயார்',
+          titleHi: '1. प्रारंभिक स्थिति और तैयारी',
+          instructionEn: ex.stepsEn[0] || 'Assume upright starting posture with calm breathing.',
+          instructionTa: ex.stepsTa[0] || 'நேரான நிலையில் வசதியாக அமரவும் அல்லது நிற்கவும்.',
+          instructionHi: ex.stepsHi[0] || 'शांत गति से सीधी मुद्रा में आएं।',
+        },
+        {
+          timeSec: 12,
+          timeLabel: '0:12',
+          titleEn: '2. Smooth Movement Execution',
+          titleTa: '2. மெதுவான அசைவு தொடக்கம்',
+          titleHi: '2. सहज और नियंत्रित गति',
+          instructionEn: ex.stepsEn[1] || 'Begin the movement smoothly without jerking.',
+          instructionTa: ex.stepsTa[1] || 'அவசரமின்றி மெதுவாக இயக்கத்தை தொடங்கவும்.',
+          instructionHi: ex.stepsHi[1] || 'झटके के बिना धीरे-धीरे गति शुरू करें।',
+        },
+        {
+          timeSec: 24,
+          timeLabel: '0:24',
+          titleEn: '3. 3-Second Isometric Hold',
+          titleTa: '3. 3-வினாடி தசை நிறுத்தம்',
+          titleHi: '3. तीन सेकंड रोकें',
+          instructionEn: ex.stepsEn[2] || 'Hold at the safe target arc for 3 calm counts.',
+          instructionTa: ex.stepsTa[2] || '3 வினாடிகள் இந்த நிலையில் பிடித்து வைக்கவும்.',
+          instructionHi: ex.stepsHi[2] || 'तीन सेकंड तक इसी स्थिति में रोकें।',
+        },
+        {
+          timeSec: 36,
+          timeLabel: '0:36',
+          titleEn: '4. Controlled Reset & Repetition',
+          titleTa: '4. கட்டுப்படுத்திய இறக்கம்',
+          titleHi: '4. नियंत्रित वापसी',
+          instructionEn: ex.stepsEn[3] || 'Slowly return to neutral and prepare for next rep.',
+          instructionTa: ex.stepsTa[3] || 'மெதுவாக இயல்பு நிலைக்கு திரும்பி மீண்டும் செய்யவும்.',
+          instructionHi: ex.stepsHi[3] || 'धीरे-धीरे सामान्य स्थिति में आएं।',
+        },
+      ];
+
+  return {
+    videoDuration: defaultDuration,
+    videoDurationSec: defaultDurationSec,
+    videoTitle: defaultTitle,
+    videoInstructor: defaultInstructor,
+    difficulty: defaultDifficulty,
+    keyBenefits: defaultBenefits,
+    videoChapters: defaultChapters,
+  };
+}

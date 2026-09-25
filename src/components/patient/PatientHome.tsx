@@ -21,13 +21,15 @@ import {
   Sliders,
   UploadCloud,
   Eye,
+  Video,
 } from 'lucide-react';
 import { PlanExercise } from '../../types';
 
 export const PatientHome: React.FC<{
   onNavigateToPlan: () => void;
   onNavigateToVisualGuide?: () => void;
-}> = ({ onNavigateToPlan, onNavigateToVisualGuide }) => {
+  onNavigateToLibrary?: () => void;
+}> = ({ onNavigateToPlan, onNavigateToVisualGuide, onNavigateToLibrary }) => {
   const {
     currentPatient,
     activePlan,
@@ -207,6 +209,39 @@ export const PatientHome: React.FC<{
           setIsVisualGuideModalOpen(true);
         }}
       />
+
+      {/* Exercise Video Library Callout Banner */}
+      {onNavigateToLibrary && (
+        <div className="bg-gradient-to-r from-[#211F1B] via-[#2A2722] to-[#1E1C18] rounded-3xl p-5 sm:p-6 text-white border border-[#3E3A33] shadow-md flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="space-y-1">
+            <div className="flex items-center gap-2">
+              <span className="w-2.5 h-2.5 rounded-full bg-[#15803D] animate-pulse" />
+              <span className="text-xs font-bold text-[#E6C978] uppercase tracking-wider">
+                {language === 'ta' ? 'உடற்பயிற்சி வீடியோ கூடம்' : 'Instructional Video Library'}
+              </span>
+            </div>
+            <h3 className="text-lg font-bold font-serif text-white">
+              {language === 'ta'
+                ? 'தோள்பட்டை, முதுகு, கணுக்கால் & முழங்கால் வீடியோக்களை பார்க்கவும்'
+                : 'Need Video Demonstrations for Other Body Parts?'}
+            </h3>
+            <p className="text-xs text-[#A9A59B] max-w-xl">
+              {language === 'ta'
+                ? 'மெதுவான அசைவு, கோண அளவீடுகள் மற்றும் தமிழ் குரல் வழிகாட்டுதலுடன் உடற்பயிற்சிகளை கற்றுக்கொள்ளுங்கள்.'
+                : 'Watch slow-motion clinical videos with angle gauges and voice guides across shoulder, back, ankle, knee, neck, and hip.'}
+            </p>
+          </div>
+
+          <button
+            type="button"
+            onClick={onNavigateToLibrary}
+            className="px-5 py-3 rounded-2xl bg-[#C99A3A] hover:bg-[#D8B15A] text-black font-bold text-xs tracking-wide shrink-0 cursor-pointer shadow-md flex items-center justify-center gap-2 transition-all active:scale-95"
+          >
+            <Video className="w-4 h-4 fill-current" />
+            <span>{language === 'ta' ? 'வீடியோ கூடம் திறக்க ▶' : 'Explore Exercise Library ▶'}</span>
+          </button>
+        </div>
+      )}
 
       {/* Next Up Main Exercise Card (Hero Action) */}
       {nextExercise && (
