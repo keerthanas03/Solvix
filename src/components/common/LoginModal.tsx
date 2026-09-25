@@ -31,7 +31,7 @@ export const LoginModal: React.FC = () => {
         </div>
 
         <h2 className="text-2xl sm:text-3xl font-bold text-[#252525] tracking-tight font-serif">
-          RehabSathi <span className="text-[#B8892D]">AI</span>
+          RehabMitra <span className="text-[#B8892D]">AI</span>
         </h2>
         <p className="text-sm font-medium text-[#77736A] mt-1 mb-6">
           Human-Centered Rehabilitation Co-Pilot

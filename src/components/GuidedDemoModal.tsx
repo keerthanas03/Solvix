@@ -53,7 +53,7 @@ export const GuidedDemoModal: React.FC = () => {
       step: 2,
       title: 'AI Co-Pilot Simplifies & Localizes',
       role: 'therapist' as const,
-      description: 'RehabSathi AI analyzes Kumar\'s low digital literacy and Tamil language preference, generating simple step-by-step guidance.',
+      description: 'RehabMitra AI analyzes Kumar\'s low digital literacy and Tamil language preference, generating simple step-by-step guidance.',
       actionText: 'Trigger AI Simplification Engine',
       onAction: async () => {
         setUserRole('therapist');

@@ -309,7 +309,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     const user =
       userName ||
       (role === 'AI_SYSTEM'
-        ? 'RehabSathi Co-Pilot'
+        ? 'RehabMitra Co-Pilot'
         : userRole === 'therapist'
         ? 'Dr. Priya Raman'
         : userRole === 'patient'

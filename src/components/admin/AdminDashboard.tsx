@@ -53,7 +53,7 @@ export const AdminDashboard: React.FC = () => {
               <span className="text-xs font-bold uppercase tracking-wider bg-[#F5F3FF] text-[#6D28D9] px-2.5 py-0.5 rounded-full border border-[#DDD6FE]">
                 Clinic Operations & Governance
               </span>
-              <span className="text-xs text-[#77736A]">RehabSathi Central Healthcare Network</span>
+              <span className="text-xs text-[#77736A]">RehabMitra Central Healthcare Network</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-extrabold text-[#252525] font-serif">
               Administrative & AI Governance Overview

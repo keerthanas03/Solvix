@@ -70,7 +70,7 @@ export const HowAiHelpsModal: React.FC = () => {
               Transparency & Human Oversight
             </div>
             <h2 className="text-2xl font-bold text-[#252525] font-serif">
-              How AI Helps in RehabSathi
+              How AI Helps in RehabMitra
             </h2>
           </div>
         </div>

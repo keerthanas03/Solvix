@@ -503,7 +503,7 @@ export const INITIAL_AUDIT_LOGS: AuditLog[] = [
   {
     id: 'aud-2',
     timestamp: '10:35 AM',
-    userName: 'RehabSathi Co-Pilot',
+    userName: 'RehabMitra Co-Pilot',
     userRole: 'AI_SYSTEM',
     action: 'Generated patient-friendly explanation & Tamil draft schedule',
     entity: 'AI Co-Pilot Assistant',
@@ -543,7 +543,7 @@ export const INITIAL_AUDIT_LOGS: AuditLog[] = [
   {
     id: 'aud-6',
     timestamp: '07:43 PM',
-    userName: 'RehabSathi Co-Pilot',
+    userName: 'RehabMitra Co-Pilot',
     userRole: 'AI_SYSTEM',
     action: 'Summarized patient feedback into clinical note; flagged for therapist review',
     entity: 'AI Feedback Analyzer',

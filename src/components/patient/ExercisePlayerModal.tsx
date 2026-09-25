@@ -4,6 +4,7 @@ import { PlanExercise } from '../../types';
 import { VisualBadge } from '../common/VisualBadges';
 import { ExerciseVisualCue } from './ExerciseVisualCue';
 import { VisualGuideModal } from './VisualGuideModal';
+import { REAL_CLINICAL_EXERCISE_DATASET } from '../../data/clinicalRehabilitationDataset';
 import {
   X,
   Volume2,
@@ -53,38 +54,55 @@ export const ExercisePlayerModal: React.FC<ExercisePlayerModalProps> = ({ exerci
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [showDetailedVisualGuide, setShowDetailedVisualGuide] = useState(false);
 
-  // Localized texts & steps
-  const steps =
-    language === 'ta'
-      ? [
-          'படி 1: நாற்காலியில் முதுகு சாய்ந்து வசதியாக அமரவும்.',
-          'படி 2: உங்கள் காலை மெதுவாக முன்னோக்கி நேராக்கவும்.',
-          'படி 3: சிரமமின்றி 3 வினாடிகள் அப்படியே வைக்கவும்.',
-          'படி 4: உங்கள் பாதத்தை மெதுவாக தரைக்கு இறக்கவும்.',
-          'படி 5: இதை நிதானமாக 10 முறை செய்யவும்.'
-        ]
-      : language === 'hi'
-      ? [
-          'चरण 1: कुर्सी पर पीठ को सहारा देकर आराम से बैठें।',
-          'चरण 2: अपने पैर को धीरे-धीरे आगे सीधा करें।',
-          'चरण 3: 3 सेकंड तक पैर को इसी स्थिति में रखें।',
-          'चरण 4: पैर को धीरे से फर्श पर वापस लाएं।',
-          'चरण 5: शांत गति से 10 बार दोहराएं।'
-        ]
-      : [
-          'Step 1: Sit comfortably on a sturdy chair with back support.',
-          'Step 2: Slowly straighten your leg forward until it is level.',
-          'Step 3: Hold the position gently for 3 seconds without straining.',
-          'Step 4: Slowly lower your foot back to the floor.',
-          'Step 5: Repeat 10 times at a calm, relaxed pace.'
-        ];
+  // Match exercise with real clinical dataset
+  const matchedClinical = REAL_CLINICAL_EXERCISE_DATASET.find(
+    (e) =>
+      e.name.toLowerCase().includes(exercise.exerciseName.toLowerCase()) ||
+      exercise.exerciseName.toLowerCase().includes(e.name.toLowerCase())
+  );
 
-  const audioText =
-    language === 'ta'
-      ? exercise.audioScriptTa || steps[currentStepIndex]
+  // Localized texts & steps
+  const steps = matchedClinical
+    ? language === 'ta'
+      ? matchedClinical.stepsTa
       : language === 'hi'
-      ? exercise.audioScriptHi || steps[currentStepIndex]
-      : exercise.audioScriptEn || steps[currentStepIndex];
+      ? matchedClinical.stepsHi
+      : matchedClinical.stepsEn
+    : language === 'ta'
+    ? [
+        'படி 1: நாற்காலியில் முதுகு சாய்ந்து வசதியாக அமரவும்.',
+        'படி 2: உங்கள் காலை மெதுவாக முன்னோக்கி நேராக்கவும்.',
+        'படி 3: சிரமமின்றி 3 வினாடிகள் அப்படியே வைக்கவும்.',
+        'படி 4: உங்கள் பாதத்தை மெதுவாக தரைக்கு இறக்கவும்.',
+        'படி 5: இதை நிதானமாக 10 முறை செய்யவும்.',
+      ]
+    : language === 'hi'
+    ? [
+        'चरण 1: कुर्सी पर पीठ को सहारा देकर आराम से बैठें।',
+        'चरण 2: अपने पैर को धीरे-धीरे आगे सीधा करें।',
+        'चरण 3: 3 सेकंड तक पैर को इसी स्थिति में रखें।',
+        'चरण 4: पैर को धीरे से फर्श पर वापस लाएं।',
+        'चरण 5: शांत गति से 10 बार दोहराएं।',
+      ]
+    : [
+        'Step 1: Sit comfortably on a sturdy chair with back support.',
+        'Step 2: Slowly straighten your leg forward until it is level.',
+        'Step 3: Hold the position gently for 3 seconds without straining.',
+        'Step 4: Slowly lower your foot back to the floor.',
+        'Step 5: Repeat 10 times at a calm, relaxed pace.',
+      ];
+
+  const audioText = matchedClinical
+    ? language === 'ta'
+      ? matchedClinical.audioTa
+      : language === 'hi'
+      ? matchedClinical.audioHi
+      : matchedClinical.audioEn
+    : language === 'ta'
+    ? exercise.audioScriptTa || steps[currentStepIndex]
+    : language === 'hi'
+    ? exercise.audioScriptHi || steps[currentStepIndex]
+    : exercise.audioScriptEn || steps[currentStepIndex];
 
   const handleListen = () => {
     if (isSpeaking) {
@@ -209,7 +227,10 @@ export const ExercisePlayerModal: React.FC<ExercisePlayerModalProps> = ({ exerci
 
               {/* Main Step Instruction Card (Big & Low-literacy friendly) */}
               <div className="p-5 sm:p-7 bg-[#FCF9F2] rounded-3xl border-2 border-[#E6C978] shadow-xs text-center space-y-4">
-                <ExerciseVisualCue exerciseName={exercise.exerciseName} />
+                <ExerciseVisualCue
+                  exerciseName={exercise.exerciseName}
+                  bodyPart={matchedClinical?.visualCueType}
+                />
 
                 <div className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white text-[#B8892D] border border-[#D8B15A] font-bold text-base shadow-2xs">
                   {currentStepIndex + 1}

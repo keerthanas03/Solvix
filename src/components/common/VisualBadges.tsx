@@ -9,7 +9,8 @@ export type BadgeType =
   | 'patient_completed'
   | 'human_review_required'
   | 'patient_feedback'
-  | 'safety_guarded';
+  | 'safety_guarded'
+  | 'evidence_based';
 
 interface VisualBadgeProps {
   type: BadgeType;
@@ -78,6 +79,12 @@ export const VisualBadge: React.FC<VisualBadgeProps> = ({
       icon: ShieldAlert,
       classes: 'bg-[#FAF5FF] text-[#7E22CE] border border-[#E9D5FF]',
       sublabel: 'Non-diagnostic Boundary',
+    },
+    evidence_based: {
+      label: customText || 'EVIDENCE-BASED PROTOCOL',
+      icon: Stethoscope,
+      classes: 'bg-[#F0FDF4] text-[#15803D] border border-[#BBF7D0]',
+      sublabel: 'Clinically Validated',
     },
   };
 

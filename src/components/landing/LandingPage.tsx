@@ -231,7 +231,7 @@ export const LandingPage: React.FC<{ onExplore: () => void }> = ({ onExplore }) 
         </div>
       </section>
 
-      {/* Social Impact Section ("Why RehabSathi?") */}
+      {/* Social Impact Section ("Why RehabMitra?") */}
       <section className="py-16 bg-[#F7F4EC]/60 border-t border-b border-[#E8E4D8]">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-white rounded-3xl border border-[#E8E4D8] p-8 sm:p-12 shadow-xs">
@@ -239,7 +239,7 @@ export const LandingPage: React.FC<{ onExplore: () => void }> = ({ onExplore }) 
               Social Impact & Purpose
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold font-serif text-[#252525]">
-              Why RehabSathi AI?
+              Why RehabMitra AI?
             </h2>
             <p className="mt-4 text-sm sm:text-base text-[#5F5B52] leading-relaxed">
               Many patients struggle not because rehabilitation instructions are unavailable, but because traditional paper handouts or complex smartphone portals fail to accommodate their language, daily manual labor hours, low digital confidence, or patchy rural internet.
@@ -287,7 +287,7 @@ export const LandingPage: React.FC<{ onExplore: () => void }> = ({ onExplore }) 
         <div className="flex justify-center mb-3">
           <GoldEmblem size="xs" />
         </div>
-        <p className="font-bold text-[#252525]">RehabSathi AI — Human-Centered Rehabilitation Co-Pilot</p>
+        <p className="font-bold text-[#252525]">RehabMitra AI — Human-Centered Rehabilitation Co-Pilot</p>
         <p className="mt-1">AI assists. Professionals decide. Patients participate.</p>
       </footer>
     </div>

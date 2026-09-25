@@ -63,7 +63,7 @@ export const PatientHelp: React.FC = () => {
           <span>Need Direct Human Medical Support?</span>
         </div>
         <p className="text-xs text-[#7F1D1D] leading-relaxed">
-          RehabSathi AI is an assistive co-pilot, <strong>not an emergency service or doctor</strong>. If you experience sudden acute pain, dizziness, or chest tightness, stop immediately and contact medical care:
+          RehabMitra AI is an assistive co-pilot, <strong>not an emergency service or doctor</strong>. If you experience sudden acute pain, dizziness, or chest tightness, stop immediately and contact medical care:
         </p>
         <div className="flex flex-wrap items-center gap-3 pt-1">
           <a
@@ -144,8 +144,8 @@ export const PatientHelp: React.FC = () => {
                 else
                   speakText(
                     language === 'ta'
-                      ? 'வணக்கம். இது உங்கள் ரெஹாப் சதி குரல் சோதனை.'
-                      : 'Hello. This is your RehabSathi audio check.',
+                      ? 'வணக்கம். இது உங்கள் ரெஹாப் மித்ரா குரல் சோதனை.'
+                      : 'Hello. This is your RehabMitra audio check.',
                     language
                   );
               }}
@@ -165,7 +165,7 @@ export const PatientHelp: React.FC = () => {
           <h2 className="text-lg font-bold text-[#252525]">AI Safety Guardrail Playground</h2>
         </div>
         <p className="text-xs text-[#5F5B52] leading-relaxed">
-          Test how RehabSathi AI handles boundary tests. The AI is architected to refuse autonomous medical diagnosis or unsolicited clinical changes:
+          Test how RehabMitra AI handles boundary tests. The AI is architected to refuse autonomous medical diagnosis or unsolicited clinical changes:
         </p>
 
         <div className="flex flex-wrap gap-2 pt-1">

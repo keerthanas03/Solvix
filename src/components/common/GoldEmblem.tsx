@@ -22,7 +22,7 @@ export const GoldEmblem: React.FC<GoldEmblemProps> = ({
   return (
     <div
       className={`relative inline-flex items-center justify-center shrink-0 ${sizeMap[size]} ${className}`}
-      aria-label="RehabSathi Medical Gold Emblem"
+      aria-label="RehabMitra Medical Gold Emblem"
     >
       {withGlow && (
         <div className="absolute inset-0 rounded-full bg-[#D8B15A]/20 blur-md transform scale-110 pointer-events-none" />

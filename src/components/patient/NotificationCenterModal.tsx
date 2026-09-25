@@ -67,7 +67,7 @@ export const NotificationCenterModal: React.FC<NotificationCenterModalProps> = (
     setPermissionState(res);
     if (res === 'granted') {
       onUpdateSettings({ ...settings, pushEnabled: true });
-      showBrowserPush('🔔 RehabSathi Push Notifications Enabled', {
+      showBrowserPush('🔔 RehabMitra Push Notifications Enabled', {
         body: `You will now receive timely reminders for ${currentPatient.name}'s daily rehabilitation exercises.`,
       });
       playGentleChime();

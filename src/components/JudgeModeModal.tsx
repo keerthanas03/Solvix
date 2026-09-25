@@ -86,7 +86,7 @@ export const JudgeModeModal: React.FC = () => {
                 <span className="text-xs text-[#77736A] font-semibold">Hackathon Edition</span>
               </div>
               <h2 className="text-2xl font-bold text-[#252525] font-serif mt-0.5">
-                RehabSathi AI Architecture & Impact Summary
+                RehabMitra AI Architecture & Impact Summary
               </h2>
             </div>
           </div>
@@ -139,6 +139,20 @@ export const JudgeModeModal: React.FC = () => {
               </div>
             ))}
           </div>
+        </div>
+
+        {/* Evidence-Based Clinical Dataset & Multi-Anatomical Coverage */}
+        <div className="p-4 bg-gradient-to-r from-[#FFFBEB] via-[#FEF3C7] to-[#FDE68A]/30 rounded-2xl border-2 border-[#FDE68A] space-y-2">
+          <div className="flex items-center justify-between text-xs">
+            <span className="font-bold text-[#92400E] uppercase tracking-wider flex items-center gap-1.5">
+              <Sparkles className="w-4 h-4 text-[#D97706]" />
+              <span>Real Clinical Dataset & Multi-Anatomical Biomechanical Visual Demos</span>
+            </span>
+            <span className="text-[11px] font-mono font-bold text-[#B45309]">8 Body Regions • ICD-10 Grounded</span>
+          </div>
+          <p className="text-xs text-[#78350F] leading-relaxed">
+            RehabMitra AI now integrates real clinical physical therapy protocols across <strong>all major anatomical regions</strong> (Neck/Cervical, Shoulder/Rotator Cuff, Lumbar Spine/Core, Hip/Pelvis, Knee/Quadriceps, Ankle/Foot, Wrist/Hand, and Posture/Thoracic) backed by APTA and Cochrane Rehabilitation evidence guidelines, with live SVG vector movement animations and safe range-of-motion arcs in degrees.
+          </p>
         </div>
 
         {/* 4 Pillars Summary Grid */}

@@ -1,24 +1,44 @@
 import React, { useState } from 'react';
-import { EXERCISE_LIBRARY } from '../../data/mockData';
-import { ExerciseItem } from '../../types';
-import { Search, BookOpen, Volume2, Info, ArrowRight, ShieldCheck } from 'lucide-react';
+import {
+  REAL_CLINICAL_EXERCISE_DATASET,
+  ClinicalExerciseData,
+} from '../../data/clinicalRehabilitationDataset';
+import { ExerciseVisualCue } from '../patient/ExerciseVisualCue';
+import { Search, Volume2, Info, Eye, ShieldCheck, CheckCircle2, AlertCircle } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
 
-export const ExerciseLibraryView: React.FC<{
-  onSelectForPlan?: (ex: ExerciseItem) => void;
-}> = ({ onSelectForPlan }) => {
+interface ExerciseLibraryViewProps {
+  onSelectForPlan?: (ex: any) => void;
+}
+
+export const ExerciseLibraryView: React.FC<ExerciseLibraryViewProps> = ({ onSelectForPlan }) => {
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedEx, setSelectedEx] = useState<ExerciseItem | null>(null);
+  const [selectedBodyPart, setSelectedBodyPart] = useState<string>('all');
+  const [selectedEx, setSelectedEx] = useState<ClinicalExerciseData | null>(null);
   const { speakText, language } = useApp();
 
-  const filtered = EXERCISE_LIBRARY.filter((ex) => {
+  const bodyParts = [
+    { id: 'all', label: 'All Regions' },
+    { id: 'neck', label: 'Neck / Cervical' },
+    { id: 'shoulder', label: 'Shoulder' },
+    { id: 'back', label: 'Back & Core' },
+    { id: 'hip', label: 'Hip & Pelvis' },
+    { id: 'knee', label: 'Knee & Thigh' },
+    { id: 'ankle', label: 'Ankle & Foot' },
+    { id: 'wrist', label: 'Wrist & Hand' },
+    { id: 'posture', label: 'Posture & Thoracic' },
+  ];
+
+  const filtered = REAL_CLINICAL_EXERCISE_DATASET.filter((ex) => {
+    const matchesCategory = selectedBodyPart === 'all' || ex.bodyPart === selectedBodyPart;
     const q = searchQuery.toLowerCase();
-    return (
+    const matchesSearch =
       ex.name.toLowerCase().includes(q) ||
-      ex.category.toLowerCase().includes(q) ||
-      ex.simpleDescription.toLowerCase().includes(q) ||
-      ex.professionalDescription.toLowerCase().includes(q)
-    );
+      ex.bodyPartLabel.toLowerCase().includes(q) ||
+      ex.clinicalDiagnosis.toLowerCase().includes(q) ||
+      ex.icd10Code.toLowerCase().includes(q) ||
+      ex.targetMuscles.toLowerCase().includes(q);
+    return matchesCategory && matchesSearch;
   });
 
   return (
@@ -29,36 +49,49 @@ export const ExerciseLibraryView: React.FC<{
           <div>
             <div className="flex items-center gap-2 mb-1.5">
               <span className="text-xs font-bold uppercase tracking-wider bg-[#F7F1E1] text-[#8E681C] px-2.5 py-0.5 rounded-full border border-[#E6C978]">
-                Clinical Repository
+                Real Clinical Repository
               </span>
-              <span className="text-xs text-[#77736A]">Demo Exercise Library</span>
+              <span className="text-xs text-[#77736A]">All Anatomical Regions ({REAL_CLINICAL_EXERCISE_DATASET.length} Verified Protocols)</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-extrabold text-[#252525] font-serif">
-              Rehabilitation Exercise Library
+              Rehabilitation Exercise & Biomechanics Library
             </h1>
-            <p className="text-sm text-[#5F5B52] mt-1">
-              Evidence-based template exercises pre-configured with professional descriptions, low-literacy steps, and multilingual audio scripts.
+            <p className="text-sm text-[#5F5B52] mt-1 max-w-2xl">
+              Authentic orthopedic physical therapy protocols with ICD-10 classifications, safe angle ranges of motion, 4-phase cadences, and dynamic vector visual cues.
             </p>
           </div>
 
-          <div className="relative w-full sm:w-72">
+          <div className="relative w-full sm:w-80">
             <Search className="w-4 h-4 text-[#77736A] absolute left-3.5 top-1/2 -translate-y-1/2" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search knee, shoulder, stretch..."
+              placeholder="Search neck, shoulder, knee, ICD-10..."
               className="w-full pl-10 pr-4 py-2.5 text-xs bg-[#FAFAF7] rounded-xl border border-[#E8E4D8] focus:border-[#C99A3A] focus:outline-none"
             />
           </div>
         </div>
 
-        {/* Clear Medical Boundary Badge */}
-        <div className="mt-4 p-3 bg-[#FCF9F2] rounded-2xl border border-[#E6C978] text-xs text-[#8E681C] flex items-center gap-2">
-          <Info className="w-4 h-4 text-[#B8892D] shrink-0" />
-          <span>
-            <strong>Demo Exercise Library:</strong> These exercises are demonstrative templates. Clinical suitability for individual patients must be evaluated and prescribed by a licensed physiotherapist.
-          </span>
+        {/* Body Part Filter Buttons */}
+        <div className="mt-4 pt-4 border-t border-[#E8E4D8] flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none">
+          {bodyParts.map((bp) => {
+            const isSelected = selectedBodyPart === bp.id;
+            return (
+              <button
+                key={bp.id}
+                type="button"
+                onClick={() => setSelectedBodyPart(bp.id)}
+                className={`px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap cursor-pointer transition-all ${
+                  isSelected
+                    ? 'bg-[#8E681C] text-white shadow-xs'
+                    : 'bg-[#FAFAF7] hover:bg-[#FCF9F2] text-[#5F5B52] border border-[#E8E4D8]'
+                }`}
+              >
+                {bp.label}
+              </button>
+            );
+          })}
         </div>
       </div>
 
@@ -67,103 +100,159 @@ export const ExerciseLibraryView: React.FC<{
         {filtered.map((item) => (
           <div
             key={item.id}
-            className="bg-white rounded-3xl border border-[#E8E4D8] p-6 shadow-xs flex flex-col justify-between hover:border-[#D8B15A] transition-all space-y-4"
+            className="bg-white rounded-3xl border border-[#E8E4D8] p-5 shadow-xs flex flex-col justify-between hover:border-[#D8B15A] transition-all space-y-4"
           >
             <div className="space-y-3">
               <div className="flex items-center justify-between text-xs">
                 <span className="font-bold text-[#8E681C] uppercase tracking-wider bg-[#FCF9F2] px-2.5 py-0.5 rounded-full border border-[#E6C978]">
-                  {item.category}
+                  {item.bodyPartLabel}
                 </span>
-                <span className="text-[#77736A]">{item.equipment}</span>
+                <span className="font-mono text-[11px] text-[#77736A] font-semibold">
+                  {item.icd10Code}
+                </span>
               </div>
 
               <div>
-                <h3 className="text-lg font-bold text-[#252525]">{item.name}</h3>
-                <p className="text-xs text-[#5F5B52] mt-1 line-clamp-2">
-                  {item.simpleDescription}
+                <h3 className="text-base font-bold text-[#252525]">{item.name}</h3>
+                <p className="text-xs text-[#5F5B52] mt-0.5 line-clamp-2">
+                  {item.clinicalDiagnosis}
                 </p>
               </div>
 
-              <div className="p-3 bg-[#FAFAF7] rounded-xl border border-[#E8E4D8] text-[11px] space-y-1 text-[#3F3D38]">
-                <div className="font-bold text-[#77736A]">Clinical Target:</div>
-                <p className="italic line-clamp-2">{item.professionalDescription}</p>
+              {/* Compact Visual Cue Preview */}
+              <div className="bg-[#FAFAF7] rounded-2xl p-2 border border-[#E8E4D8]">
+                <ExerciseVisualCue
+                  exerciseName={item.name}
+                  bodyPart={item.visualCueType}
+                  isPerforming={true}
+                  size="sm"
+                />
               </div>
 
-              <div className="flex items-center gap-3 text-xs text-[#77736A]">
-                <span>Default: <strong>{item.defaultReps}</strong></span>
+              <div className="p-3 bg-[#FAFAF7] rounded-xl border border-[#E8E4D8] text-[11px] space-y-1 text-[#3F3D38]">
+                <div className="font-bold text-[#77736A]">Muscles: {item.targetMuscles}</div>
+                <div className="text-[#8E681C] font-semibold">Safe Arc: {item.safeRangeOfMotion}</div>
+              </div>
+
+              <div className="flex items-center justify-between text-xs text-[#77736A]">
+                <span>Dosage: <strong>{item.dosage}</strong></span>
                 <span>•</span>
-                <span>{item.defaultFrequency}</span>
+                <span className="font-mono text-[10px]">{item.cadence}</span>
               </div>
             </div>
 
             <div className="flex items-center gap-2 pt-3 border-t border-[#E8E4D8]">
               <button
+                type="button"
                 onClick={() =>
                   speakText(
                     language === 'ta'
-                      ? item.audioScriptTa
+                      ? item.audioTa
                       : language === 'hi'
-                      ? item.audioScriptHi
-                      : item.audioScriptEn,
+                      ? item.audioHi
+                      : item.audioEn,
                     language
                   )
                 }
-                className="p-2 rounded-xl bg-[#FCF9F2] hover:bg-[#F7F1E1] text-[#8E681C] border border-[#E6C978] transition-colors cursor-pointer"
-                title="Listen to sample audio script"
+                className="p-2.5 rounded-xl bg-[#FCF9F2] hover:bg-[#F7F1E1] text-[#8E681C] border border-[#E6C978] transition-colors cursor-pointer"
+                title="Listen to audio cue"
               >
                 <Volume2 className="w-4 h-4" />
               </button>
 
               <button
+                type="button"
                 onClick={() => setSelectedEx(item)}
-                className="flex-1 py-2 rounded-xl bg-white border border-[#E8E4D8] text-xs font-bold text-[#5F5B52] hover:bg-[#F7F4EC] transition-colors cursor-pointer"
+                className="flex-1 py-2.5 rounded-xl bg-white border border-[#E8E4D8] text-xs font-bold text-[#5F5B52] hover:bg-[#F7F4EC] transition-colors cursor-pointer flex items-center justify-center gap-1.5"
               >
-                View Steps
+                <Eye className="w-3.5 h-3.5 text-[#B8892D]" />
+                <span>Full Protocol & Steps</span>
               </button>
             </div>
           </div>
         ))}
       </div>
 
-      {/* Detail Modal */}
+      {/* Detailed Protocol Inspection Modal */}
       {selectedEx && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-xs">
-          <div className="bg-white rounded-3xl border border-[#E8E4D8] p-6 sm:p-8 max-w-xl w-full shadow-2xl space-y-5 max-h-[88vh] overflow-y-auto">
-            <div className="flex items-center justify-between border-b border-[#E8E4D8] pb-3">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs animate-in fade-in">
+          <div className="bg-white rounded-3xl border border-[#E8E4D8] p-6 sm:p-8 max-w-2xl w-full shadow-2xl space-y-5 max-h-[90vh] overflow-y-auto">
+            <div className="flex items-start justify-between border-b border-[#E8E4D8] pb-3">
               <div>
-                <span className="text-xs font-bold uppercase text-[#8E681C]">{selectedEx.category}</span>
-                <h2 className="text-xl font-bold text-[#252525]">{selectedEx.name}</h2>
+                <div className="flex items-center gap-2">
+                  <span className="text-xs font-bold uppercase text-[#8E681C]">
+                    {selectedEx.bodyPartLabel}
+                  </span>
+                  <span className="text-xs font-mono text-[#77736A]">
+                    {selectedEx.icd10Code}
+                  </span>
+                </div>
+                <h2 className="text-xl font-bold text-[#252525] mt-0.5">{selectedEx.name}</h2>
+                <p className="text-xs text-[#5F5B52]">{selectedEx.clinicalDiagnosis}</p>
               </div>
+
               <button
+                type="button"
                 onClick={() => setSelectedEx(null)}
-                className="text-xs font-bold px-3 py-1.5 rounded-lg border border-[#E8E4D8] text-[#77736A]"
+                className="text-xs font-bold px-3 py-1.5 rounded-lg border border-[#E8E4D8] text-[#77736A] hover:bg-black/5 cursor-pointer"
               >
                 Close
               </button>
             </div>
 
+            {/* Visual Vector Demo */}
+            <div>
+              <div className="text-xs font-bold uppercase text-[#77736A] mb-1">
+                Biomechanical Vector Animation
+              </div>
+              <ExerciseVisualCue
+                exerciseName={selectedEx.name}
+                bodyPart={selectedEx.visualCueType}
+                isPerforming={true}
+                size="md"
+              />
+            </div>
+
+            {/* Clinical Evidence Citation */}
+            <div className="p-3 bg-[#FAFAF7] rounded-xl border border-[#E8E4D8] text-xs flex items-center gap-2">
+              <ShieldCheck className="w-4 h-4 text-[#15803D] shrink-0" />
+              <div>
+                <span className="font-bold text-[#252525]">Evidence Standard: </span>
+                <span className="text-[#5F5B52]">{selectedEx.evidenceSource}</span>
+              </div>
+            </div>
+
+            {/* Steps & Safety */}
             <div className="space-y-3 text-xs">
-              <div className="p-3 bg-[#FAFAF7] rounded-xl border border-[#E8E4D8]">
-                <div className="font-bold text-[#77736A]">Professional Prescription</div>
-                <p className="mt-1 text-[#252525]">{selectedEx.professionalDescription}</p>
-              </div>
-
               <div>
-                <div className="font-bold text-[#252525] mb-1.5">Simplified English Steps:</div>
-                <ol className="list-decimal pl-5 space-y-1 text-[#3F3D38]">
+                <div className="font-bold text-[#252525] mb-1">Step-by-Step Execution:</div>
+                <div className="space-y-1">
                   {selectedEx.stepsEn.map((step, i) => (
-                    <li key={i}>{step}</li>
+                    <div key={i} className="p-2 bg-[#FAFAF7] rounded-lg border border-[#E8E4D8]">
+                      {step}
+                    </div>
                   ))}
-                </ol>
+                </div>
               </div>
 
-              <div>
-                <div className="font-bold text-[#8E681C] mb-1.5">தமிழ் எளிய வழிகாட்டுதல் (Tamil):</div>
-                <ol className="list-decimal pl-5 space-y-1 text-[#3F3D38]">
-                  {selectedEx.stepsTa.map((step, i) => (
-                    <li key={i}>{step}</li>
-                  ))}
-                </ol>
+              <div className="grid grid-cols-2 gap-3 pt-2">
+                <div className="p-3 bg-[#F0FDF4] rounded-xl border border-[#BBF7D0]">
+                  <div className="font-bold text-[#15803D] mb-1">Clinical Do's:</div>
+                  <ul className="space-y-1 text-[#166534]">
+                    {selectedEx.dos.map((d, i) => (
+                      <li key={i}>✓ {d}</li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className="p-3 bg-[#FEF2F2] rounded-xl border border-[#FECACA]">
+                  <div className="font-bold text-[#DC2626] mb-1">Safety Don'ts:</div>
+                  <ul className="space-y-1 text-[#991B1B]">
+                    {selectedEx.donts.map((d, i) => (
+                      <li key={i}>✕ {d}</li>
+                    ))}
+                  </ul>
+                </div>
               </div>
             </div>
           </div>

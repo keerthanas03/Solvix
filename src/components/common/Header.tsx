@@ -36,7 +36,7 @@ export const Header: React.FC = () => {
   const roleLabels: Record<UserRole, { label: string; icon: any; desc: string }> = {
     patient: { label: 'Patient View', icon: User, desc: 'Kumar R (Low Literacy)' },
     therapist: { label: 'Physiotherapist', icon: Activity, desc: 'Dr. Priya Raman' },
-    admin: { label: 'Clinic Admin', icon: Building2, desc: 'RehabSathi Central' },
+    admin: { label: 'Clinic Admin', icon: Building2, desc: 'RehabMitra Central' },
   };
 
   const languages: { code: LanguageCode; label: string; native: string }[] = [
@@ -77,7 +77,7 @@ export const Header: React.FC = () => {
             <div>
               <div className="flex items-center gap-2">
                 <span className="text-lg sm:text-xl font-bold tracking-tight text-[#252525] font-serif">
-                  RehabSathi <span className="text-[#B8892D]">AI</span>
+                  RehabMitra <span className="text-[#B8892D]">AI</span>
                 </span>
                 <span className="hidden md:inline-flex items-center text-[10px] font-semibold tracking-wider uppercase px-2 py-0.5 rounded-full bg-[#FCF9F2] text-[#8E681C] border border-[#E6C978]">
                   Co-Pilot
