@@ -1,0 +1,6 @@
+{
+  "name": "RehabSathi AI",
+  "description": "Human-Centered Rehabilitation Co-Pilot for Low-Digital-Literacy Patients and Physiotherapists",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
